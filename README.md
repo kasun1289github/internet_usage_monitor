@@ -18,7 +18,7 @@ window and to a CSV file.
 
 Keep both files together in the same folder, e.g.:
 ```
-C:\Users\<you>\Desktop\internet_usage
+C:\Users\<you>\Desktop\internet_usage_monitor
 ```
 
 ## One-time setup on a new machine
@@ -32,7 +32,7 @@ C:\Users\<you>\Desktop\internet_usage
    pip install pywin32
    ```
    
-3. **Create the folder** for this tool, e.g. `C:\Users\<you>\Desktop\internet_usage`,
+3. **Create the folder** for this tool, e.g. `C:\Users\<you>\Desktop\internet_usage_monitor`,
    and put `traffic_addon.py` and `start_traffic_monitor.bat` inside it.
 
 4. **Find your Chrome install path.** The `.bat` file assumes:
@@ -42,6 +42,13 @@ C:\Users\<you>\Desktop\internet_usage
    If Chrome is installed somewhere else on this machine, open
    `start_traffic_monitor.bat` in Notepad and update that path (appears
    twice, once per launch branch).
+
+5. **New Day Data Handling**
+   - The application automatically detects when a new day starts.
+   - A Windows popup notification appears to inform the user that a new day has started. You need to click Ok button inorder to proceed.
+   - The previous day's traffic data is saved before the counters are reset.
+   - A new CSV file is then created for the new day.
+   - Daily traffic counters are reset to ensure accurate usage tracking for each day.
 
 ## Running it (every time)
 
@@ -82,6 +89,17 @@ DOMAIN_GROUPS = {
 This is **not a filter** — every site is tracked automatically whether or not it's listed here. This dictionary only controls the display name:
 sites in the list get combined into one friendly line (e.g. all of YouTube's various server domains show up as one "YouTube" total); sites
 not listed just show up under their own raw hostname instead. Add more entries any time — just restart the `.bat` file afterward.
+
+## Traffic Data & Daily Handling
+
+ - Traffic usage is recorded in a CSV file at regular intervals.
+ - Each record includes the timestamp, website, traffic generated during the interval, and  cumulative traffic usage.
+ - The bytes field represents the traffic generated since the previous report.
+ - The accumulative_bytes field represents the total traffic consumed by that website during the current day.
+ - Human-readable values are also provided in KB, MB, GB, etc.
+ - When a new day is detected, a Windows popup notification appears.
+ - The previous day's traffic data is saved, counters are reset, and a new CSV file is created for the new day.
+
 
 ## Troubleshooting
 
